@@ -6,26 +6,29 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
           source={require("../../assets/images/dent_consult_icon.png")}
           style={styles.logo}
         />
+        
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Quick Sign-In</Text>
+        <Text style={styles.title}>Create Your Account</Text>
         <Text style={styles.subtitle}>
           Fast And Simple Access To Your Account.
         </Text>
       </View>
+
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <Image
@@ -33,10 +36,41 @@ const LoginScreen = () => {
             style={styles.inputIcon}
           />
           <TextInput
-            placeholder="Enter Your Phone Number Or Email"
+            placeholder="Enter Your Email"
             placeholderTextColor="#777777"
             style={styles.input}
+            keyboardType="email-address"
           />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Image
+            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/phone.png" }}
+            style={styles.inputIcon}
+          />
+          <TextInput
+            placeholder="Enter Your Phone Number"
+            placeholderTextColor="#777777"
+            style={styles.input}
+            keyboardType="phone-pad"
+          />
+          <TouchableOpacity style={styles.inlineButton}>
+            <Text style={styles.inlineButtonText}>Get OTP</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.inputWrapper}>
+          <Image
+            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/lock-2.png" }}
+            style={styles.inputIcon}
+          />
+          <TextInput
+            placeholder="OTP"
+            placeholderTextColor="#777777"
+            style={styles.input}
+            keyboardType="numeric"
+          />
+          <TouchableOpacity style={styles.inlineButton}>
+            <Text style={styles.inlineButtonText}>Verify</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.inputWrapper}>
           <Image
@@ -46,31 +80,40 @@ const LoginScreen = () => {
           <TextInput
             placeholder="Enter Your Password"
             placeholderTextColor="#777777"
-            secureTextEntry
             style={styles.input}
+            secureTextEntry
           />
         </View>
-        <TouchableOpacity onPress={() => router.push("/login/resetpassword")}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
-        </TouchableOpacity>
+        <View style={styles.inputWrapper}>
+          <Image
+            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/lock-2.png" }}
+            style={styles.inputIcon}
+          />
+          <TextInput
+            placeholder="Confirm Password"
+            placeholderTextColor="#777777"
+            style={styles.input}
+            secureTextEntry
+          />
+        </View>
       </View>
-      <TouchableOpacity style={styles.signInButton}>
-        <Text style={styles.signInText}>Sign In</Text>
+
+      <TouchableOpacity style={styles.signUpButton}>
+        <Text style={styles.signUpButtonText}>Sign Up</Text>
       </TouchableOpacity>
-      <Text style={styles.signUpPrompt}>
-        Don’t Have An Account?{" "}
-        <Text
-          style={styles.signUpLink}
-          onPress={() => router.push("/login/signup")}
-        >
-          Sign Up
-        </Text>
+
+      <Text style={styles.termsText}>
+        By Signing Up To This App You Agree With{" "}
+        <Text style={styles.link}>Our Terms</Text> And{" "}
+        <Text style={styles.link}>Privacy Policy</Text>
       </Text>
+
       <View style={styles.orContainer}>
         <View style={styles.line} />
         <Text style={styles.orText}>Or</Text>
         <View style={styles.line} />
       </View>
+
       <View style={styles.socialContainer}>
         <TouchableOpacity style={styles.socialButton}>
           <Image
@@ -87,23 +130,13 @@ const LoginScreen = () => {
           <Text style={styles.socialText}>Apple</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.authMethods}>
-        <View style={styles.authMethod}>
-          <Image
-            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/face-id.png" }}
-            style={styles.authIcon}
-          />
-          <Text style={styles.authText}>Face ID</Text>
-        </View>
-        <View style={styles.authMethod}>
-          <Image
-            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/fingerprint.png" }}
-            style={styles.authIcon}
-          />
-          <Text style={styles.authText}>Touch ID</Text>
-        </View>
-      </View>
-    </View>
+
+      <TouchableOpacity onPress={() => router.push("/login")}>
+        <Text style={styles.signInLink}>
+          Already Have An Account? <Text style={styles.link}>Sign In</Text>
+        </Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -123,12 +156,17 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: "contain",
   },
+  logoText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333333",
+    marginTop: 5,
+  },
   textContainer: {
-    alignItems: "flex-start",
-    marginBottom: 40,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#3997A2",
     marginBottom: 5,
@@ -160,36 +198,41 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 10,
   },
-  forgotPassword: {
-    color: "#3997A2",
-    textAlign: "right",
-    marginTop: 5,
+  inlineButton: {
+    backgroundColor: "#694EA0",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 8,
   },
-  signInButton: {
+  inlineButtonText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 12,
+  },
+  signUpButton: {
     backgroundColor: "#694EA0",
     paddingVertical: 12,
     borderRadius: 25,
     alignItems: "center",
     marginVertical: 10,
   },
-  signInText: {
+  signUpButtonText: {
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
   },
-  signUpPrompt: {
+  termsText: {
+    fontSize: 12,
     textAlign: "center",
     marginVertical: 10,
-    fontSize: 14,
   },
-  signUpLink: {
+  link: {
     color: "#3997A2",
-    fontWeight: "bold",
   },
   orContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    marginVertical: 20,
   },
   orText: {
     fontSize: 14,
@@ -207,13 +250,13 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   socialButton: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#dddddd",
     borderRadius: 10,
-    paddingVertical: 15,
+    paddingVertical: 10,
+    flex: 1,
     marginHorizontal: 5,
     justifyContent: "center",
   },
@@ -223,26 +266,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   socialText: {
-    fontSize: 16,
-    color: "#333333",
+    fontWeight: "bold",
   },
-  authMethods: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 20,
-  },
-  authMethod: {
-    alignItems: "center",
-  },
-  authIcon: {
-    width: 60,
-    height: 60,
-    marginBottom: 5,
-  },
-  authText: {
+  signInLink: {
+    textAlign: "center",
     fontSize: 14,
-    color: "#333333",
+    marginTop: 10,
   },
 });
 
-export default LoginScreen;
+export default SignUpScreen;

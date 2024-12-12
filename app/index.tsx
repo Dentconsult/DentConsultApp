@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
-const router = useRouter();
-
 const WelcomeScreen = () => {
+  const router = useRouter(); // Correctly place useRouter inside the component
+
   return (
     <View style={styles.container}>
       <Image
@@ -26,7 +26,7 @@ const WelcomeScreen = () => {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.replace("/welcome")}
+          onPress={() => router.replace("/welcome")} // Ensure "/welcome" route exists
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
@@ -56,18 +56,11 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: "contain",
   },
-  logoText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333333",
-    marginTop: 10,
-  },
   content: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    marginTop: 50,
   },
   title: {
     fontSize: 20,

@@ -2,9 +2,10 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
-const router = useRouter();
+
 
 const ImmediateAssistanceScreen = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Image
@@ -60,8 +61,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   doctorImage: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: undefined,
+    aspectRatio: 1,
     resizeMode: "contain",
     marginBottom: 20,
   },

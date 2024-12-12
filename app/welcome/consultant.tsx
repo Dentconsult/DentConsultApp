@@ -2,9 +2,10 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 
-const router = useRouter();
 
 const ConsultantScreen = () => {
+  
+const router = useRouter();
   return (
     <View style={styles.container}>
       <Image
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: "absolute",
-    width: "100%",
-    height: "30%",
+    width: "120%",
+    height: "35%",
     resizeMode: "cover",
     top: 0,
   },
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    marginBottom: 20,
+    marginBottom: 70,
   },
   skipButton: {
     paddingVertical: 10,
