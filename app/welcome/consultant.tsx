@@ -1,33 +1,38 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
-const ResidentDoctorScreen = ({ navigation }) => {
+const router = useRouter();
+
+const ConsultantScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("./assets/background_shape.png")}
+        source={require("../../assets/images/background_shape.png")}
         style={styles.backgroundImage}
       />
       <View style={styles.content}>
         <Image
-          source={require("./assets/resident_doctor_character.png")}
+          source={require("../../assets/images/consultant_character.png")}
           style={styles.characterImage}
         />
-        <Text style={styles.title}>Need Resident Doctors? We've Got You Covered!</Text>
+        <Text style={styles.title}>
+          Attention Consultants: Unlock Local Opportunities!
+        </Text>
         <Text style={styles.subtitle}>
-          Shortage Of Resident Doctors? Don't Worry—Hire Them Here.
+          Are You A Consultant? Don’t Miss Opportunities From Nearby Clinics.
         </Text>
       </View>
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.skipButton}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => router.replace("/welcome")}
         >
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.nextButton}
-          onPress={() => navigation.navigate("LoginScreen")}
+          onPress={() => router.replace("/welcome/residentdoctor")}
         >
           <Text style={styles.nextText}>Next</Text>
         </TouchableOpacity>
@@ -101,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResidentDoctorScreen;
+export default ConsultantScreen;

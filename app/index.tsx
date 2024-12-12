@@ -1,19 +1,21 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
-const WelcomeScreen = ({ navigation }) => {
+const router = useRouter();
+
+const WelcomeScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("./assets/background_shape.png")}
+        source={require("../assets/images/background_shape.png")}
         style={styles.backgroundImage}
       />
       <View style={styles.logoContainer}>
         <Image
-          source={require("./assets/dent_consult_icon.png")}
+          source={require("../assets/images/splash_icon.png")}
           style={styles.logoImage}
         />
-        <Text style={styles.logoText}>DENT CONSULT</Text>
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>
@@ -24,7 +26,7 @@ const WelcomeScreen = ({ navigation }) => {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Scheduling")}
+          onPress={() => router.replace("/welcome")}
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
@@ -40,18 +42,18 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     position: "absolute",
-    width: "100%",
-    height: "30%",
+    width: "120%",
+    height: "35%",
     resizeMode: "cover",
     top: 0,
   },
   logoContainer: {
     alignItems: "center",
-    marginTop: "20%",
+    marginTop: "65%",
   },
   logoImage: {
-    width: 120,
-    height: 120,
+    width: 250,
+    height: 250,
     resizeMode: "contain",
   },
   logoText: {

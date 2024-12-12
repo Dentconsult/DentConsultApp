@@ -1,38 +1,39 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
-const ImmediateAssistanceScreen = ({ navigation }) => {
+const router = useRouter();
+
+const SchedulingScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("./assets/background_shape.png")}
+        source={require("../../assets/images/background_shape.png")}
         style={styles.backgroundImage}
       />
       <View style={styles.content}>
         <Image
-          source={require("./assets/doctor_image.png")}
-          style={styles.doctorImage}
+          source={require("../../assets/images/dentist_character.png")}
+          style={styles.characterImage}
         />
-        <Text style={styles.title}>Immediate Assistance At Your Fingertips!</Text>
+        <Text style={styles.title}>Scheduling Patients? You May Lose Them.</Text>
         <Text style={styles.subtitle}>
-          Emergency, Broken File, Or Broken Root? Use The SOS Feature To Call A
-          Consultant Immediately.
+          Don't Miss A Patient Again Due To Consultant Unavailability.
         </Text>
-        <View style={styles.footer}>
-          <TouchableOpacity
-            style={styles.skipButton}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text style={styles.skipText}>Skip</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={() => navigation.navigate("ConsultantScreen")}
->
-            <Text style={styles.nextText}>Next</Text>
-          </TouchableOpacity>
-
-        </View>
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.skipButton}
+          onPress={() => router.replace("/welcome")}
+        >
+          <Text style={styles.skipText}>Skip</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => router.replace("/welcome/immediateassistance")}
+        >
+          <Text style={styles.nextText}>Next</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -43,27 +44,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+
   backgroundImage: {
     position: "absolute",
-    width: "100%",
-    height: "30%",
+    width: "120%",
+    height: "35%",
     resizeMode: "cover",
     top: 0,
   },
+
   content: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 20,
   },
-  doctorImage: {
-    width: 200,
-    height: 200,
+  characterImage: {
+    width: "80%",
+    height: undefined,
+    aspectRatio: 1,
     resizeMode: "contain",
     marginBottom: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#333333",
     textAlign: "center",
@@ -73,14 +77,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#777777",
     textAlign: "center",
-    marginBottom: 30,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%",
     paddingHorizontal: 20,
+    marginBottom: 20,
   },
   skipButton: {
     paddingVertical: 10,
@@ -103,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImmediateAssistanceScreen;
+export default SchedulingScreen;

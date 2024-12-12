@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const LoginScreen = ({ navigation }) => {
+import { useRouter } from "expo-router";
+
+const router = useRouter();
+
+const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
-          source={require("./assets/dent_consult_icon.png")}
+          source={require("../../assets/images/dent_consult_icon.png")}
           style={styles.logo}
         />
         <Text style={styles.logoText}>DENT CONSULT</Text>
