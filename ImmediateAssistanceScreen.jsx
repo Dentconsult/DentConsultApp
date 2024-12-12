@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const SchedulingScreen = ({ navigation }) => {
+const ImmediateAssistanceScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
@@ -10,27 +10,29 @@ const SchedulingScreen = ({ navigation }) => {
       />
       <View style={styles.content}>
         <Image
-          source={require("./assets/dentist_character.png")}
-          style={styles.characterImage}
+          source={require("./assets/doctor_image.png")}
+          style={styles.doctorImage}
         />
-        <Text style={styles.title}>Scheduling Patients? You May Lose Them.</Text>
+        <Text style={styles.title}>Immediate Assistance At Your Fingertips!</Text>
         <Text style={styles.subtitle}>
-          Don't Miss A Patient Again Due To Consultant Unavailability.
+          Emergency, Broken File, Or Broken Root? Use The SOS Feature To Call A
+          Consultant Immediately.
         </Text>
-      </View>
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.skipButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Text style={styles.skipText}>Skip</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={() => navigation.navigate("ImmediateAssistance")}
-        >
-          <Text style={styles.nextText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.skipButton}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text style={styles.skipText}>Skip</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={() => navigation.navigate("ConsultantScreen")}
+>
+            <Text style={styles.nextText}>Next</Text>
+          </TouchableOpacity>
+
+        </View>
       </View>
     </View>
   );
@@ -50,19 +52,18 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
-  characterImage: {
-    width: "80%",
-    height: undefined,
-    aspectRatio: 1,
+  doctorImage: {
+    width: 200,
+    height: 200,
     resizeMode: "contain",
     marginBottom: 20,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#333333",
     textAlign: "center",
@@ -72,13 +73,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#777777",
     textAlign: "center",
+    marginBottom: 30,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    width: "100%",
     paddingHorizontal: 20,
-    marginBottom: 20,
   },
   skipButton: {
     paddingVertical: 10,
@@ -101,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SchedulingScreen;
+export default ImmediateAssistanceScreen;

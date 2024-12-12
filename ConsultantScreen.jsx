@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const SchedulingScreen = ({ navigation }) => {
+const ConsultantScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
@@ -10,24 +10,26 @@ const SchedulingScreen = ({ navigation }) => {
       />
       <View style={styles.content}>
         <Image
-          source={require("./assets/dentist_character.png")}
+          source={require("./assets/consultant_character.png")}
           style={styles.characterImage}
         />
-        <Text style={styles.title}>Scheduling Patients? You May Lose Them.</Text>
+        <Text style={styles.title}>
+          Attention Consultants: Unlock Local Opportunities!
+        </Text>
         <Text style={styles.subtitle}>
-          Don't Miss A Patient Again Due To Consultant Unavailability.
+          Are You A Consultant? Don’t Miss Opportunities From Nearby Clinics.
         </Text>
       </View>
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.skipButton}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("ResidentDoctorScreen")}
         >
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.nextButton}
-          onPress={() => navigation.navigate("ImmediateAssistance")}
+          onPress={() => navigation.navigate("ResidentDoctorScreen")}
         >
           <Text style={styles.nextText}>Next</Text>
         </TouchableOpacity>
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   characterImage: {
-    width: "80%",
+    width: "70%",
     height: undefined,
     aspectRatio: 1,
     resizeMode: "contain",
@@ -101,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SchedulingScreen;
+export default ConsultantScreen;

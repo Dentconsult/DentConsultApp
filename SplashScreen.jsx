@@ -11,7 +11,7 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("./assets/splash.png")} style={styles.image} />
+      <Image source={require("./assets/splash_icon.png")} style={styles.image} />
       <PacmanIndicator color="#4caf50" size={50} />
     </View>
   );

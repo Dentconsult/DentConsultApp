@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const SchedulingScreen = ({ navigation }) => {
+const ResidentDoctorScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
@@ -10,12 +10,12 @@ const SchedulingScreen = ({ navigation }) => {
       />
       <View style={styles.content}>
         <Image
-          source={require("./assets/dentist_character.png")}
+          source={require("./assets/resident_doctor_character.png")}
           style={styles.characterImage}
         />
-        <Text style={styles.title}>Scheduling Patients? You May Lose Them.</Text>
+        <Text style={styles.title}>Need Resident Doctors? We've Got You Covered!</Text>
         <Text style={styles.subtitle}>
-          Don't Miss A Patient Again Due To Consultant Unavailability.
+          Shortage Of Resident Doctors? Don't Worry—Hire Them Here.
         </Text>
       </View>
       <View style={styles.footer}>
@@ -27,7 +27,7 @@ const SchedulingScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.nextButton}
-          onPress={() => navigation.navigate("ImmediateAssistance")}
+          onPress={() => navigation.navigate("LoginScreen")}
         >
           <Text style={styles.nextText}>Next</Text>
         </TouchableOpacity>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   characterImage: {
-    width: "80%",
+    width: "70%",
     height: undefined,
     aspectRatio: 1,
     resizeMode: "contain",
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SchedulingScreen;
+export default ResidentDoctorScreen;
