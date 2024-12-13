@@ -1,9 +1,16 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { useFonts } from "expo-font";
 
 const WelcomeScreen = () => {
   const router = useRouter(); // Correctly place useRouter inside the component
+
+  const [fontsLoaded] = useFonts({
+    "outfitRegular": require('../assets/fonts/Outfit-Regular.ttf'),
+    "outfitSemiBold": require('../assets/fonts/Outfit-SemiBold.ttf')
+  });
+
 
   return (
     <View style={styles.container}>
@@ -19,7 +26,7 @@ const WelcomeScreen = () => {
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>
-          Welcome To <Text style={styles.highlight}>DentConsult</Text>
+          Welcome To <Text style={styles.highlight}>Dent Consult</Text>
         </Text>
         <Text style={styles.subtitle}>
           Where Clinicians Collaborate With Consultants For Better Patient Care.
@@ -43,7 +50,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     position: "absolute",
     width: "120%",
-    height: "35%",
+    height: "38%",
     resizeMode: "cover",
     top: 0,
   },
@@ -59,38 +66,44 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 28.7,
     fontWeight: "bold",
-    color: "#333333",
-    textAlign: "center",
+    fontFamily: "outfitSemiBold",
+    color: "#434A5B",
+    textAlign: "left",
     marginBottom: 10,
   },
   highlight: {
-    color: "#4caf50",
+    color: "#3797A3",
   },
   subtitle: {
-    fontSize: 14,
-    color: "#777777",
-    textAlign: "center",
+    fontSize: 20.5,
+    fontFamily: "outfitRegular",
+    color: "#767676",
+    textAlign: "left",
     marginBottom: 30,
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#6200EE",
+    backgroundColor: "#694EA0",
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 25,
-    width: "80%",
-    alignItems: "center",
+    borderRadius: 8.2,
+    width: "100%",
+    height: 61.5,
+    alignItems: "center" ,
   },
   buttonText: {
     color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18.45,
+    fontFamily: "outfitSemiBold",
+    alignItems: "center",
+    justifyContent: 'center',
+    margin: 5,
   },
 });
 
