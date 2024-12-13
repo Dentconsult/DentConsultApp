@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     fontFamily: "outfitRegular",
     color: "#767676",
     textAlign: "left",
-    marginBottom: 30,
+    lineHeight: 25,
   },
   button: {
     marginTop: 20,
