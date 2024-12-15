@@ -39,4 +39,69 @@ const router = useRouter();
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+  },
+  backgroundImage: {
+    position: "absolute",
+    width: "120%",
+    height: "35%",
+    resizeMode: "cover",
+    top: 0,
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  characterImage: {
+    width: "70%",
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333333",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#777777",
+    textAlign: "center",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    marginBottom: 70,
+  },
+  skipButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  skipText: {
+    color: "#777777",
+    fontSize: 14,
+  },
+  nextButton: {
+    backgroundColor: "#6200EE",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25,
+  },
+  nextText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+});
+
 export default ConsultantScreen;

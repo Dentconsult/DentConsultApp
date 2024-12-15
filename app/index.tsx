@@ -43,13 +43,54 @@ const styles = StyleSheet.create({
   logo: {
     marginHorizontal: "auto",
     alignItems: "center",
+    marginTop: "65%",
+  },
+  logoImage: {
+    width: 250,
+    height: 250,
+    resizeMode: "contain",
+  },
+  content: {
+    flex: 1,
     justifyContent: "center",
-    width: 201.42,
-    height: 201.42,
-    top: 200,
+    alignItems: "flex-start",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28.7,
+    fontWeight: "bold",
+    fontFamily: "outfitSemiBold",
+    color: "#434A5B",
+    textAlign: "left",
+    marginBottom: 10,
   },
   highlight: {
     color: "#3797A3",
+  },
+  subtitle: {
+    fontSize: 20.5,
+    fontFamily: "outfitRegular",
+    color: "#767676",
+    textAlign: "left",
+    lineHeight: 25,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: "#694EA0",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8.2,
+    width: "100%",
+    height: 61.5,
+    alignItems: "center" ,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 18.45,
+    fontFamily: "outfitSemiBold",
+    alignItems: "center",
+    justifyContent: 'center',
+    margin: 5,
   },
 });
 
