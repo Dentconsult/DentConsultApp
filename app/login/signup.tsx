@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -7,11 +8,81 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 
 const SignUpScreen = () => {
   const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Email validation regex
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // PhoneNumber validation regex
+  const validatePhoneNumber = (phoneNumber: string) => {
+    const phoneNumberRegex = /^((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/;
+    return phoneNumberRegex.test(phoneNumber);
+  };
+
+  const getOtp = async () => {
+    // Validate inputs
+    if (!phoneNumber.trim()) {
+      Alert.alert('Validation Error', 'PhoneNumber is required');
+      return;
+    }
+    if (!email.trim()) {
+      Alert.alert('Validation Error', 'Email is required');
+      return;
+    }
+    if (!validateEmail(email)) {
+      Alert.alert('Validation Error', 'Invalid email format');
+      return;
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      Alert.alert('Validation Error', 'Invalid phone number');
+      return;
+    }
+
+    // Data to send
+    const data = {
+      email: email,
+      phoneNumber: phoneNumber,
+    };
+
+    try {
+      const response = await fetch('https://x0irjra2xc.execute-api.eu-north-1.amazonaws.com/default/dentconsult/getotp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'Data sent successfully!');
+      } else {
+        Alert.alert('Error', result.message || 'Something went wrong');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to connect to the server');
+    } finally {
+      // Set loading state to false
+      //setLoading(false);
+    }
+
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -40,6 +111,8 @@ const SignUpScreen = () => {
             placeholderTextColor="#777777"
             style={styles.input}
             keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -52,8 +125,10 @@ const SignUpScreen = () => {
             placeholderTextColor="#777777"
             style={styles.input}
             keyboardType="phone-pad"
+            value={phoneNumber}
+            onChangeText={(text) => setPhoneNumber(text)}
           />
-          <TouchableOpacity style={styles.inlineButton}>
+          <TouchableOpacity style={styles.inlineButton} onPress={getOtp}>
             <Text style={styles.inlineButtonText}>Get OTP</Text>
           </TouchableOpacity>
         </View>
