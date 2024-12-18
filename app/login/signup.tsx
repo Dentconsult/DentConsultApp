@@ -98,8 +98,8 @@ const SignUpScreen = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.signUpButton}>
-        <Text style={styles.signUpButtonText}>Sign Up</Text>
+      <TouchableOpacity style={styles.signUpButton} onPress={() => router.push("/login/roleselection")}>
+        <Text style={styles.signUpButtonText} >Sign Up</Text>
       </TouchableOpacity>
 
       <Text style={styles.termsText}>
