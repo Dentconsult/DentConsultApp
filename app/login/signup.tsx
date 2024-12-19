@@ -105,8 +105,12 @@ const SignUpScreen = () => {
 
   const verifyOtp = async () => {
     // Validate inputs
-    setDisableVerifyOtp(true);
-    validateEmail(email);
+    if(!validateEmail(email)) {
+      return;
+    }
+    if(!validatePhoneNumber(phoneNumber)) {
+      return;
+    }
     if (!otp.trim()) {
       Alert.alert('Validation Error', 'Otp is required');
       return;
@@ -148,7 +152,9 @@ const SignUpScreen = () => {
 
   const register = async () => {
     // Validate inputs
-    validateEmail(email);
+    if(!validateEmail(email)) {
+      return;
+    }
     
     if (!password.trim()) {
       Alert.alert('Validation Error', 'Password is required');
