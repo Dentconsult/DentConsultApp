@@ -141,8 +141,8 @@ const LoginScreen = () => {
                 >
                   <Text style={styles.closeButtonText}>×</Text>
                 </TouchableOpacity>
-                <Text style={styles.title}>Reset Password</Text>
-                <Text style={styles.subtitle}>
+                <Text style={styles.modalTitle}>Reset Password</Text>
+                <Text style={styles.modalSubtitle}>
                   Select Which Contact Details Should We Use To Reset Your Password
                 </Text>
       
@@ -379,14 +379,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#D8D8D8",
   },
-  title: {
+  modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#3997A2",
     marginBottom: 10,
     marginTop: 40,
   },
-  subtitle: {
+  modalSubtitle: {
     fontSize: 14,
     color: "#777777",
     textAlign: "center",
