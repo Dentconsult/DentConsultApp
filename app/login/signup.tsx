@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 
@@ -21,37 +22,48 @@ const SignUpScreen = () => {
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [buttonText, setOtpButtonText] = useState('Get Otp');
+  const [disableOtp, setDisableOtp] = useState(false);
+  const [disableVerifyOtp, setDisableVerifyOtp] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [userVerified, setUserVerified] = useState(false);
 
   // Email validation regex
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  // PhoneNumber validation regex
-  const validatePhoneNumber = (phoneNumber: string) => {
-    const phoneNumberRegex = /^((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/;
-    return phoneNumberRegex.test(phoneNumber);
-  };
-
-  const getOtp = async () => {
-    // Validate inputs
-    if (!phoneNumber.trim()) {
-      Alert.alert('Validation Error', 'PhoneNumber is required');
-      return;
-    }
     if (!email.trim()) {
       Alert.alert('Validation Error', 'Email is required');
       return;
     }
-    if (!validateEmail(email)) {
+    if(!emailRegex.test(email)) {
       Alert.alert('Validation Error', 'Invalid email format');
       return;
     }
-    if (!validatePhoneNumber(phoneNumber)) {
+  };
+
+  const validatePhoneNumber = (phoneNumber: string) => {
+    const phoneNumberRegex = /^((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/;
+    if (!phoneNumber.trim()) {
+      Alert.alert('Validation Error', 'PhoneNumber is required');
+      return;
+    }
+    if(!phoneNumberRegex.test(phoneNumber)) {
       Alert.alert('Validation Error', 'Invalid phone number');
       return;
     }
+  };
+
+  const getOtp = async () => {
+    // Validate inputs
+    setDisableOtp(true)
+    setTimeout(() => { setDisableOtp(false)}, 10000)
+    
+    validateEmail(email);
+    validatePhoneNumber(phoneNumber);
+    
+    setOtpLoading(true);
 
     // Data to send
     const data = {
@@ -72,6 +84,7 @@ const SignUpScreen = () => {
 
       if (response.ok) {
         Alert.alert('Success', 'Data sent successfully!');
+        setOtpButtonText("ReSend OTP");
       } else {
         Alert.alert('Error', result.message || 'Something went wrong');
       }
@@ -80,9 +93,99 @@ const SignUpScreen = () => {
       Alert.alert('Error', 'Failed to connect to the server');
     } finally {
       // Set loading state to false
-      //setLoading(false);
+      setOtpLoading(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    // Validate inputs
+    setDisableVerifyOtp(true);
+    validateEmail(email);
+    if (!otp.trim()) {
+      Alert.alert('Validation Error', 'Otp is required');
+      return;
+    }
+    setVerifyOtpLoading(true);
+    // Data to send
+    const data = {
+      email: email,
+      otp: otp,
+    };
+    
+    try {
+      const response = await fetch('https://x0irjra2xc.execute-api.eu-north-1.amazonaws.com/default/dentconsult/verifyotp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'Phone number verified successfully!');
+        setUserVerified(true);
+      } else {
+        Alert.alert('Error', result.message || 'Something went wrong');
+        setDisableVerifyOtp(false);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to connect to the server');
+      setDisableOtp(false);
+    } finally {
+      // Set loading state to false
+      setVerifyOtpLoading(false);
+    }
+  };
+
+  const register = async () => {
+    // Validate inputs
+    validateEmail(email);
+    
+    if (!password.trim()) {
+      Alert.alert('Validation Error', 'Password is required');
+      return;
     }
 
+    if ((password.trim()) !== (confirmPassword.trim())) {
+      Alert.alert('Validation Error', 'Password and Confirm Password should be equal');
+      return;
+    }
+
+    setRegisterLoading(true);
+    // Data to send
+    const data = {
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    };
+
+    try {
+      const response = await fetch('https://x0irjra2xc.execute-api.eu-north-1.amazonaws.com/default/dentconsult/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'User registered successfully');
+        router.replace("/login");
+      } else {
+        Alert.alert('Error', result.message || 'Something went wrong');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to connect to the server');
+    } finally {
+      // Set loading state to false
+      setRegisterLoading(false);
+    }
   };
 
   return (
@@ -127,11 +230,19 @@ const SignUpScreen = () => {
             style={styles.input}
             keyboardType="phone-pad"
             value={phoneNumber}
-            onChangeText={(text) => setPhoneNumber(text)}
+            maxLength={10}
+            onChangeText={(text) => {
+              if(text !== phoneNumber) {
+                setOtpButtonText("Get OTP");
+                setUserVerified(false);
+              }   
+              setPhoneNumber(text); 
+            }}
           />
-          <TouchableOpacity style={styles.inlineButton} onPress={getOtp}>
-            <Text style={styles.inlineButtonText}>Get OTP</Text>
-          </TouchableOpacity>
+          {otpLoading ? (<ActivityIndicator size="small" color="#0000ff" />) : 
+          (!userVerified && <TouchableOpacity style={[styles.inlineButton, disableOtp && styles.disabledButton]} onPress={getOtp} disabled={disableOtp}>
+            <Text style={styles.inlineButtonText}>{buttonText}</Text>
+          </TouchableOpacity>) }
         </View>
         <View style={styles.inputWrapper}>
           <Image
@@ -143,10 +254,14 @@ const SignUpScreen = () => {
             placeholderTextColor="#777777"
             style={styles.input}
             keyboardType="numeric"
+            value={otp}
+            maxLength={6}
+            onChangeText={(text) => setOtp(text)}
           />
-          <TouchableOpacity style={styles.inlineButton}>
+          {verifyOtpLoading ? (<ActivityIndicator size="small" color="#0000ff" />) :
+          (!userVerified && <TouchableOpacity style={styles.inlineButton} disabled={disableVerifyOtp} onPress={verifyOtp}>
             <Text style={styles.inlineButtonText}>Verify</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>) }
         </View>
         <View style={styles.inputWrapper}>
           <Image
@@ -158,6 +273,8 @@ const SignUpScreen = () => {
             placeholderTextColor="#777777"
             style={styles.input}
             secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -170,13 +287,15 @@ const SignUpScreen = () => {
             placeholderTextColor="#777777"
             style={styles.input}
             secureTextEntry
+            value={confirmPassword}
+            onChangeText={(text) => setConfirmPassword(text)}
           />
         </View>
       </View>
-
-      <TouchableOpacity style={styles.signUpButton}>
-        <Text style={styles.signUpButtonText}>Sign Up</Text>
-      </TouchableOpacity>
+      {registerLoading ? (<ActivityIndicator size="large" color="#0000ff" />) :
+        (<TouchableOpacity style={styles.signUpButton}>
+          <Text style={styles.signUpButtonText} onPress={register}>Sign Up</Text>
+        </TouchableOpacity>) }
 
       <Text style={styles.termsText}>
         By Signing Up To This App You Agree With{" "}
@@ -349,6 +468,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     marginTop: 10,
+  },
+  disabledButton: {
+    backgroundColor: '#a9a9a9', // Change to your desired disabled color
   },
 });
 
