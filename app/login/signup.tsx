@@ -22,7 +22,7 @@ const SignUpScreen = () => {
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [buttonText, setOtpButtonText] = useState('Get Otp');
+  const [buttonText, setOtpButtonText] = useState('Get OTP');
   const [disableOtp, setDisableOtp] = useState(false);
   const [disableVerifyOtp, setDisableVerifyOtp] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
@@ -35,34 +35,40 @@ const SignUpScreen = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
       Alert.alert('Validation Error', 'Email is required');
-      return;
+      return false;
     }
     if(!emailRegex.test(email)) {
       Alert.alert('Validation Error', 'Invalid email format');
-      return;
+      return false;
     }
+    return true;
   };
 
   const validatePhoneNumber = (phoneNumber: string) => {
     const phoneNumberRegex = /^((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/;
     if (!phoneNumber.trim()) {
       Alert.alert('Validation Error', 'PhoneNumber is required');
-      return;
+      return false;
     }
     if(!phoneNumberRegex.test(phoneNumber)) {
       Alert.alert('Validation Error', 'Invalid phone number');
-      return;
+      return false;
     }
+    return true;
   };
 
   const getOtp = async () => {
     // Validate inputs
+    if(!validateEmail(email)) {
+      return;
+    }
+    if(!validatePhoneNumber(phoneNumber)) {
+      return;
+    }
+
     setDisableOtp(true)
     setTimeout(() => { setDisableOtp(false)}, 10000)
-    
-    validateEmail(email);
-    validatePhoneNumber(phoneNumber);
-    
+  
     setOtpLoading(true);
 
     // Data to send
@@ -84,7 +90,7 @@ const SignUpScreen = () => {
 
       if (response.ok) {
         Alert.alert('Success', 'Data sent successfully!');
-        setOtpButtonText("ReSend OTP");
+        setOtpButtonText("Re-Send OTP");
       } else {
         Alert.alert('Error', result.message || 'Something went wrong');
       }
@@ -245,10 +251,10 @@ const SignUpScreen = () => {
           </TouchableOpacity>) }
         </View>
         <View style={styles.inputWrapper}>
-          <Image
+         <Image
             source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/lock-2.png" }}
-            style={styles.inputIcon}
-          />
+            style={styles.inputIcon} 
+          /> 
           <TextInput
             placeholder="OTP"
             placeholderTextColor="#777777"
@@ -259,7 +265,7 @@ const SignUpScreen = () => {
             onChangeText={(text) => setOtp(text)}
           />
           {verifyOtpLoading ? (<ActivityIndicator size="small" color="#0000ff" />) :
-          (!userVerified && <TouchableOpacity style={styles.inlineButton} disabled={disableVerifyOtp} onPress={verifyOtp}>
+          (!userVerified && <TouchableOpacity style={styles.inlineButton} disabled={userVerified} onPress={verifyOtp}>
             <Text style={styles.inlineButtonText}>Verify</Text>
           </TouchableOpacity>) }
         </View>
@@ -293,7 +299,7 @@ const SignUpScreen = () => {
         </View>
       </View>
       {registerLoading ? (<ActivityIndicator size="large" color="#0000ff" />) :
-        (<TouchableOpacity style={styles.signUpButton}>
+        (<TouchableOpacity style={[styles.signUpButton, !userVerified && styles.disabledButton]} disabled={!userVerified}>
           <Text style={styles.signUpButtonText} onPress={register}>Sign Up</Text>
         </TouchableOpacity>) }
 
