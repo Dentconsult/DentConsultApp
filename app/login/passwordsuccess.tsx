@@ -1,52 +1,98 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Modal,
+} from "react-native";
 import { useRouter } from "expo-router";
 
-const PasswordResetSuccessScreen = () => {
+const PasswordResetSuccessModal = () => {
+  const [modalVisible, setModalVisible] = useState(true);
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../../assets/images/success.png")} // Update with your image
-        style={styles.image}
-      />
-      <Text style={styles.title}>Your Password Has Been Reset Successfully!</Text>
-      <TouchableOpacity
-        style={styles.actionButton}
-        onPress={() => router.push("/login")}
-      >
-        <Text style={styles.actionButtonText}>Done</Text>
-      </TouchableOpacity>
-    </View>
+    <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <View style={styles.overlay}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => {
+              setModalVisible(false);
+              router.push("/login");
+            }}
+          >
+            <Text style={styles.closeButtonText}>×</Text>
+          </TouchableOpacity>
+          <Image
+            source={require("../../assets/images/success.png")}
+            style={styles.image}
+          />
+          <Text style={styles.title}>Your Password Has Been Reset Successfully</Text>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              setModalVisible(false);
+              router.push("/login");
+            }}
+          >
+            <Text style={styles.actionButtonText}>Done</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  overlay: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
+  },
+  modalContainer: {
+    width: "90%",
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    elevation: 5,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#3997A2",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeButtonText: {
+    fontSize: 20,
+    color: "#D8D8D8",
   },
   image: {
     width: 200,
     height: 200,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333333",
-    marginBottom: 20,
+    color: "#3997A2",
+    marginBottom: 30,
   },
   actionButton: {
     backgroundColor: "#694EA0",
     paddingVertical: 12,
-    paddingHorizontal: 50,
-    borderRadius: 25,
+    paddingHorizontal: 100,
+    borderRadius: 8,
   },
   actionButtonText: {
     color: "#ffffff",
@@ -55,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PasswordResetSuccessScreen;
+export default PasswordResetSuccessModal;

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: "#777777",
-    marginBottom: 20,
+    marginBottom: 60,
   },
   inputWrapper: {
     flexDirection: "row",
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#dddddd",
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: 25,
     paddingHorizontal: 10,
     height: 55, // Adjusted height to match the design
     backgroundColor: "#f9f9f9",
