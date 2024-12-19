@@ -10,32 +10,63 @@ import {
 import { useRouter } from "expo-router";
 
 const ResetPasswordScreen = () => {
-  const [modalVisible, setModalVisible] = useState(true); // Control the visibility of the modal
+  const [modalVisible, setModalVisible] = useState(true);
+  const [selectedOption, setSelectedOption] = useState<"email" | "sms" | null>(
+    null
+  ); // Track selected option
   const router = useRouter();
+
+  const handleOptionSelect = (option: "email" | "sms") => {
+    setSelectedOption(option);
+  };
+
+  const handleSendOTP = () => {
+    if (selectedOption) {
+      setModalVisible(false);
+      router.push("/login/verification"); // Navigate to the verification screen
+    } else {
+      alert("Please select an option to send OTP");
+    }
+  };
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.overlay}>
+        <View style={styles.bumpContainer}>
+          <View style={styles.bump}>
+            <Image
+              source={require("../../assets/images/lock.png")}
+              style={styles.bumpIcon}
+            />
+          </View>
+        </View>
         <View style={styles.popupContainer}>
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={() => setModalVisible(false)} // Close the modal
+            onPress={() => {
+              setModalVisible(false);
+              router.push("/login"); // Navigate back to login on close
+            }}
           >
             <Text style={styles.closeButtonText}>×</Text>
           </TouchableOpacity>
-          <Image
-            source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/key.png" }}
-            style={styles.keyIcon}
-          />
           <Text style={styles.title}>Reset Password</Text>
           <Text style={styles.subtitle}>
             Select Which Contact Details Should We Use To Reset Your Password
           </Text>
 
-          <TouchableOpacity style={styles.optionButton}>
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selectedOption === "email" && styles.selectedOption,
+            ]}
+            onPress={() => handleOptionSelect("email")}
+          >
             <View style={styles.optionContent}>
               <Image
-                source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/email.png" }}
+                source={{
+                  uri: "https://img.icons8.com/ios-filled/50/3997A2/email.png",
+                }}
                 style={styles.optionIcon}
               />
               <Text style={styles.optionText}>Via Email:</Text>
@@ -43,10 +74,18 @@ const ResetPasswordScreen = () => {
             <Text style={styles.detailText}>johndoe@gmail.com</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.optionButton}>
+          <TouchableOpacity
+            style={[
+              styles.optionButton,
+              selectedOption === "sms" && styles.selectedOption,
+            ]}
+            onPress={() => handleOptionSelect("sms")}
+          >
             <View style={styles.optionContent}>
               <Image
-                source={{ uri: "https://img.icons8.com/ios-filled/50/3997A2/sms.png" }}
+                source={{
+                  uri: "https://img.icons8.com/ios-filled/50/3997A2/sms.png",
+                }}
                 style={styles.optionIcon}
               />
               <Text style={styles.optionText}>Via SMS:</Text>
@@ -54,10 +93,7 @@ const ResetPasswordScreen = () => {
             <Text style={styles.detailText}>+4477******77</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => router.push("/login/verification")} // Navigate as per the original code
-          >
+          <TouchableOpacity style={styles.actionButton} onPress={handleSendOTP}>
             <Text style={styles.actionButtonText}>Send OTP</Text>
           </TouchableOpacity>
         </View>
@@ -73,6 +109,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  bumpContainer: {
+    position: "absolute",
+    top: "28%",
+    zIndex: 2,
+  },
+  bump: {
+    backgroundColor: "#ffffff",
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+  },
+  bumpIcon: {
+    width: 40,
+    height: 40,
+  },
   popupContainer: {
     width: "90%",
     backgroundColor: "#ffffff",
@@ -80,6 +134,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     elevation: 5,
+    marginTop: 120, // Adjust for bump
   },
   closeButton: {
     position: "absolute",
@@ -88,24 +143,20 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#3997A2",
     justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {
     fontSize: 20,
-    color: "#333333",
-  },
-  keyIcon: {
-    width: 50,
-    height: 50,
-    marginBottom: 10,
+    color: "#D8D8D8",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#3997A2",
     marginBottom: 10,
+    marginTop: 40,
   },
   subtitle: {
     fontSize: 14,
@@ -120,6 +171,10 @@ const styles = StyleSheet.create({
     borderColor: "#dddddd",
     borderRadius: 10,
     marginBottom: 15,
+  },
+  selectedOption: {
+    borderColor: "#694EA0",
+    backgroundColor: "#EFEAFF",
   },
   optionContent: {
     flexDirection: "row",
@@ -144,10 +199,11 @@ const styles = StyleSheet.create({
   actionButton: {
     backgroundColor: "#694EA0",
     paddingVertical: 15,
-    borderRadius: 25,
+    borderRadius: 8,
     alignItems: "center",
     width: "100%",
     marginTop: 10,
+    marginBottom:30,
   },
   actionButtonText: {
     color: "#ffffff",

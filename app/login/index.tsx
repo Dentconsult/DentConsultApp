@@ -1,4 +1,5 @@
 import React from "react";
+import { COLORS, SIZES } from '../styles';
 import {
   View,
   Text,
@@ -51,7 +52,7 @@ const LoginScreen = () => {
           />
         </View>
         <TouchableOpacity onPress={() => router.push("/login/resetpassword")}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+          <Text style={styles.forgotPassword}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.signInButton}>
@@ -166,11 +167,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   signInButton: {
-    backgroundColor: "#694EA0",
-    paddingVertical: 12,
-    borderRadius: 25,
-    alignItems: "center",
-    marginVertical: 10,
+        backgroundColor: COLORS.primary,
+        padding: 15,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
   },
   signInText: {
     color: "#ffffff",

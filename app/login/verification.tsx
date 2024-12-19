@@ -67,14 +67,16 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     color: "#777777",
-    textAlign: "center",
+    textAlign: "left",
     marginBottom: 20,
+    marginTop:10,
   },
   otpContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "80%",
     marginBottom: 20,
+    marginTop:40,
   },
   otpInput: {
     borderWidth: 1,
@@ -89,10 +91,10 @@ const styles = StyleSheet.create({
   actionButton: {
     backgroundColor: "#694EA0",
     paddingVertical: 15,
-    borderRadius: 25,
+    borderRadius: 8,
     alignItems: "center",
     width: "80%",
-    marginTop: 20,
+    marginTop: 60,
   },
   actionButtonText: {
     color: "#ffffff",

@@ -26,7 +26,7 @@ const SchedulingScreen = () => {
       <View style={sharedStyles.onboardFooter}>
           <TouchableOpacity
             style={sharedStyles.skipButton}
-            onPress={() => router.replace("/welcome")}>
+            onPress={() => router.replace("/login")}>
             <Text style={sharedStyles.skipText}>Skip</Text>
           </TouchableOpacity>
           <TouchableOpacity

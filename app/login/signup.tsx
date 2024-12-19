@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { COLORS, SIZES } from '../styles';
 import {
   View,
   Text,
@@ -285,11 +286,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   signUpButton: {
-    backgroundColor: "#694EA0",
-    paddingVertical: 12,
-    borderRadius: 25,
-    alignItems: "center",
-    marginVertical: 10,
+    backgroundColor: COLORS.primary,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   signUpButtonText: {
     color: "#ffffff",
